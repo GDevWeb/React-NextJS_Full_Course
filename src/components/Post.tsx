@@ -1,8 +1,9 @@
-// /*
-// 18.Building first component
-// 19.Outputting dynamic value
-// 20.Reusing Component
-// */
+/*
+  18.Building first component
+  19.Outputting dynamic value
+  20.Reusing Component
+  34. Outputting List Data
+*/
 
 interface PostProps {
   author: string;

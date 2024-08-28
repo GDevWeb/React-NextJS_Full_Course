@@ -4,7 +4,7 @@
   30.Adding a Shared Header & more State Management
     32. Handling Form Submission
     Error has occurred with the basic code for the modal "hard coded" , i have to use <modal> from react-dom 
-
+34. Outputting List Data
 
  */
 import { useState } from "react";
@@ -49,9 +49,24 @@ function PostsList({ isPosting, onStopPosting }: PostsListProps) {
           <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
         </Modal>
       )}
-      <ul className={classes.postsList}>
-        <Post author={"enteredAuthor"} text={"enteredBody"} date={getDate()} />
-      </ul>
+      {posts.length > 0 ? (
+        <ul className={classes.postsList}>
+          {posts.map((post, index) => {
+            return (
+              <Post
+                key={index}
+                author={post.author}
+                text={post.body}
+                date={getDate()}
+              />
+            );
+          })}
+        </ul>
+      ) : (
+        <h1 className="text4xl font-bold text-center text-red-500 ">
+          There are not post yet
+        </h1>
+      )}
     </>
   );
 }
