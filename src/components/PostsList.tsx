@@ -63,9 +63,14 @@ function PostsList({ isPosting, onStopPosting }: PostsListProps) {
           })}
         </ul>
       ) : (
-        <h1 className="text4xl font-bold text-center text-red-500 ">
-          There are not post yet
-        </h1>
+        <div>
+          <h1 className="text4xl font-bold text-center text-orange-500 ">
+            There are not post yet
+          </h1>
+          <h1 className="text4xl font-bold text-center text-black ">
+            Start post some!
+          </h1>
+        </div>
       )}
     </>
   );
