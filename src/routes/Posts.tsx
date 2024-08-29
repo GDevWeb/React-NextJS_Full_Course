@@ -30,7 +30,7 @@ function Posts() {
         <h1 className="text-3xl font-bold text-center">
           Hello React and NextJs
         </h1>
-        <h2 className="text-3xl font-bold text-center">Awesome Full course</h2>
+        <h2 className="text-3xl font-bold text-center">React Crash Course</h2>
         <PostsList />
       </main>
     </>

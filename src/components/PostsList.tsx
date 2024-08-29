@@ -31,17 +31,6 @@ function PostsList() {
   // 2.***Functions***
 
   // Create post :
-  const addPostHandler = (postData: Post) => {
-    setPosts((existingPosts) => [postData, ...existingPosts]);
-    // Post :
-    fetch("http://localhost:8080/posts", {
-      method: "POST",
-      body: JSON.stringify(postData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  };
 
   // 3.***Render***
 

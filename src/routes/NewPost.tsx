@@ -13,77 +13,34 @@
 
 */
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import Modal from "../components/Modal";
 import classes from "./NewPost.module.css";
 
-interface NewPostProps {
-  onAddPost: (postData: { body: string; author: string }) => void;
-}
-
-function NewPost({ onAddPost }: NewPostProps) {
+function NewPost() {
+  // 0.***Hooks***
   // 1.***State***
-  const [enteredBody, setEnteredBody] = useState("");
-  const [enteredAuthor, setEnteredAuthor] = useState("");
   // 2.***Functions***
-  const onBodyChangeHandler = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const value = event.target.value;
-    setEnteredBody(value);
-  };
-  const onAuthorChangeHandler = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const value = event.target.value;
-    setEnteredAuthor(value);
-  };
-  const getDate = () => {
-    const currentDate = new Date().toLocaleDateString();
-    const currentHours = new Date().toLocaleTimeString();
+  // const getDate = () => {
+  //   const currentDate = new Date().toLocaleDateString();
+  //   const currentHours = new Date().toLocaleTimeString();
 
-    const currentDateMessage = `Send the ${currentDate} at ${currentHours}`;
+  //   const currentDateMessage = `Send the ${currentDate} at ${currentHours}`;
 
-    return currentDateMessage;
-  };
-
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const postData = {
-      body: enteredBody,
-      author: enteredAuthor,
-      createdAt: getDate(),
-    };
-    onAddPost(postData);
-    console.log(postData);
-    // onCancel();
-  };
+  //   return currentDateMessage;
+  // };
 
   // 3.***Render***
   return (
     <Modal>
-      <form className={classes.form} onSubmit={submitHandler}>
+      <Form method="POST" className={classes.form}>
         <div>
-          <label htmlFor="enteredBody">Text</label>
-          <textarea
-            name="enteredBody"
-            id="enteredBody"
-            required
-            rows={3}
-            onChange={onBodyChangeHandler}
-          />
+          <label htmlFor="body">Text</label>
+          <textarea name="body" id="body" required rows={3} />
         </div>
         <div>
-          <label htmlFor="enteredAuthor">Your Name</label>
-          <input
-            type="text"
-            name="enteredAuthor"
-            id="enteredAuthor"
-            required
-            onChange={onAuthorChangeHandler}
-          />
+          <label htmlFor="author">Your Name</label>
+          <input type="text" name="author" id="author" required />
         </div>
         <p className={classes.actions}>
           <button type="button">
@@ -93,9 +50,25 @@ function NewPost({ onAddPost }: NewPostProps) {
           </button>
           <button type="submit">Send</button>
         </p>
-      </form>
+      </Form>
     </Modal>
   );
 }
 
 export default NewPost;
+
+export async function action({ request }) {
+  const formData = request.formData();
+  formData.get("body");
+  const postData = formData.fromEntries(formData); //under the hood : we create a simple object {key : value}
+  // Post :
+  await fetch("http://localhost:8080/posts", {
+    method: "POST",
+    body: JSON.stringify(postData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return redirect("/");
+}
