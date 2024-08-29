@@ -9,18 +9,14 @@
   36. Sending a POST HTTP Request
   37. Handling Side Effects with useEffect()
   38. Handle Loading State
+  44. Data Fetching via loader()s
+    1.use loader feature from react-dom to fetch data posts
+    2.refactorize code
 
  */
-import { useEffect, useState } from "react";
-import Modal from "./Modal";
-import NewPost from "./NewPost";
+import { useLoaderData } from "react-router-dom";
 import Post from "./Post";
 import classes from "./Post.module.css";
-
-interface PostsListProps {
-  isPosting: boolean;
-  onStopPosting: () => void;
-}
 
 interface Post {
   body: string;
@@ -28,30 +24,11 @@ interface Post {
   createdAt: string;
 }
 
-function PostsList({ isPosting, onStopPosting }: PostsListProps) {
+function PostsList() {
+  // 0.***Hooks*** :
+  const posts: Post | null = useLoaderData();
   // 1.***State***
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [isFetching, setIsFetching] = useState(false);
-  // const [errorFetching, setErrorFetching] = useState(false);
   // 2.***Functions***
-  // Get all :
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setIsFetching(true);
-      const response = await fetch("http://localhost:8080/posts");
-      const data = await response.json();
-
-      // if (!response.ok) {
-      //   console.warn(`Error fetching data posts ...`);
-      //   setErrorFetching(true);
-      //   setIsFetching(false);
-      //   setPosts([]);
-      // }
-      setPosts(data.posts);
-      setIsFetching(false);
-    };
-    fetchPosts();
-  }, []);
 
   // Create post :
   const addPostHandler = (postData: Post) => {
@@ -70,12 +47,7 @@ function PostsList({ isPosting, onStopPosting }: PostsListProps) {
 
   return (
     <>
-      {!isFetching && isPosting && (
-        <Modal onClose={onStopPosting}>
-          <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
-        </Modal>
-      )}
-      {!isFetching && posts.length > 0 ? (
+      {posts.length > 0 ? (
         <ul className={classes.postsList}>
           {posts.map((post, index) => {
             return (
@@ -98,16 +70,6 @@ function PostsList({ isPosting, onStopPosting }: PostsListProps) {
           </h1>
         </div>
       )}
-      {isFetching && (
-        <h1 className="text4xl font-bold text-center text-orange-500 ">
-          Loading posts...
-        </h1>
-      )}
-      {/* {errorFetching && (
-        <h1 className="text4xl font-bold text-center text-red-500 ">
-          Error fetching data posts ...
-        </h1>
-      )} */}
     </>
   );
 }

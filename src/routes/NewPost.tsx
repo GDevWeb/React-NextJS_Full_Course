@@ -6,18 +6,23 @@
   31.Adding form buttons
   32. Handling Form Submission
     Error has occurred with the basic code for the modal "hard coded" , i have to use <modal> from react-dom 
+  43. Linking & Navigating
+      1.add link component from react-router-dom
+      2.refactorize code
+      
 
 */
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import Modal from "../components/Modal";
 import classes from "./NewPost.module.css";
 
 interface NewPostProps {
-  onCancel: () => void;
   onAddPost: (postData: { body: string; author: string }) => void;
 }
 
-function NewPost({ onCancel, onAddPost }: NewPostProps) {
+function NewPost({ onAddPost }: NewPostProps) {
   // 1.***State***
   const [enteredBody, setEnteredBody] = useState("");
   const [enteredAuthor, setEnteredAuthor] = useState("");
@@ -58,7 +63,7 @@ function NewPost({ onCancel, onAddPost }: NewPostProps) {
 
   // 3.***Render***
   return (
-    <>
+    <Modal>
       <form className={classes.form} onSubmit={submitHandler}>
         <div>
           <label htmlFor="enteredBody">Text</label>
@@ -81,13 +86,15 @@ function NewPost({ onCancel, onAddPost }: NewPostProps) {
           />
         </div>
         <p className={classes.actions}>
-          <button type="submit">Send</button>
-          <button type="button" onClick={onCancel}>
-            Cancel
+          <button type="button">
+            <Link to=".." type="button" className={classes.button}>
+              Cancel
+            </Link>
           </button>
+          <button type="submit">Send</button>
         </p>
       </form>
-    </>
+    </Modal>
   );
 }
 

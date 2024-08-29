@@ -7,42 +7,40 @@
   41. Working with Layout Routes 
     1.create layout
     2.nested routes
+  42. Refactoring Route Components & More Nesting
+  44. Data Fetching via loader()s
+    1.use loader feature from react-dom to fetch data posts
+    2.refactorize code
 
 */
 
-import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import PostsList from "../components/PostsList";
 import "./App.css";
-import MainHeader from "./components/MainHeader";
-import PostsList from "./components/PostsList";
 
-function App() {
+function Posts() {
   // 1.***State***
-  const [modalIsVisible, setModalIsVisible] = useState(false);
 
   // 2.***Functions***
-  const showModalHandler = () => {
-    setModalIsVisible(true);
-  };
-  const hideModalHandler = () => {
-    setModalIsVisible(false);
-  };
-
   // 3.***Render***
   return (
     <>
-      <MainHeader onCreatePost={showModalHandler} />
+      <Outlet />
       <main>
         <h1 className="text-3xl font-bold text-center">
           Hello React and NextJs
         </h1>
         <h2 className="text-3xl font-bold text-center">Awesome Full course</h2>
-        <PostsList
-          isPosting={modalIsVisible}
-          onStopPosting={hideModalHandler}
-        />
+        <PostsList />
       </main>
     </>
   );
 }
 
-export default App;
+export default Posts;
+
+export async function loader() {
+  const response = await fetch("http://localhost:8080/posts");
+  const data = await response.json();
+  return data.posts;
+}

@@ -9,28 +9,25 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
+import { useNavigate } from "react-router-dom";
 import classes from "./Modal.module.css";
+
 interface ModalProps {
   children: React.ReactNode;
-  onClose: () => void;
 }
 
-function Modal({ children, onClose }: ModalProps) {
+function Modal({ children }: ModalProps) {
   // 1.***State***
+  const navigate = useNavigate();
   // 2.***Functions***
-  const handleBackdropClick = () => {
-    onClose();
+  const closeHandler = () => {
+    navigate(".."); //render form everywhere in the app
   };
 
-  const stopPropagation = (event: React.MouseEvent) => {
-    event.stopPropagation();
-  };
   // 3.***Render***
   return ReactDOM.createPortal(
-    <div className={classes.backdrop} onClick={handleBackdropClick}>
-      <div className={classes.modal} onClick={stopPropagation}>
-        {children}
-      </div>
+    <div className={classes.backdrop} onClick={closeHandler}>
+      <div className={classes.modal}>{children}</div>
     </div>,
     document.getElementById("modal-root")
   );
