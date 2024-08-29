@@ -1,7 +1,5 @@
 import { Link, useLoaderData } from "react-router-dom";
-
 import Modal from "../components/Modal";
-import classes from "./PostDetails.module.css";
 
 function PostDetails() {
   const post = useLoaderData();
@@ -9,11 +7,16 @@ function PostDetails() {
   if (!post) {
     return (
       <Modal>
-        <main className={classes.details}>
-          <h1>Could not find post</h1>
-          <p>Unfortunately, the requested post could not be found.</p>
+        <main className="p-6 bg-white rounded-md shadow-lg text-center">
+          <h1 className="text-2xl font-bold mb-4">Could not find post</h1>
+          <p className="mb-4">
+            Unfortunately, the requested post could not be found.
+          </p>
           <p>
-            <Link to=".." className={classes.btn}>
+            <Link
+              to=".."
+              className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+            >
               Okay
             </Link>
           </p>
@@ -23,9 +26,11 @@ function PostDetails() {
   }
   return (
     <Modal>
-      <main className={classes.details}>
-        <p className={classes.author}>{post.author}</p>
-        <p className={classes.text}>{post.body}</p>
+      <main className="p-6 bg-white rounded-md shadow-lg">
+        <p className="text-lg font-semibold text-gray-800 mb-4">
+          {post.author}
+        </p>
+        <p className="text-gray-700">{post.body}</p>
       </main>
     </Modal>
   );

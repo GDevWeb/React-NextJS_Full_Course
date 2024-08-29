@@ -5,6 +5,8 @@
   34. Outputting List Data
 */
 
+import { Link } from "react-router-dom";
+
 interface PostProps {
   id: string;
   author: string;
@@ -12,21 +14,21 @@ interface PostProps {
   createdAt: string;
 }
 
-import { Link } from "react-router-dom";
-import classes from "./Post.module.css";
 function Post({ id, author, text, createdAt }: PostProps) {
   return (
-    <Link to={id}>
-      <div className={classes.post}>
-        <p className={classes.author}>
-          From : <span>{author}</span>
+    <Link
+      to={id}
+      className="block mb-4 bg-purple-500 hover:bg-purple-600 transition rounded-lg p-4 text-white shadow-md"
+    >
+      <div>
+        <p className="text-lg font-semibold">
+          From: <span>{author}</span>
         </p>
-        <p className={classes.text}>
-          Send : <span>{text}</span>
+        <p className="mt-2">
+          Send: <span>{text}</span>
         </p>
-
-        <div className="footerPost">
-          <p className={classes.createdAt}>
+        <div className="mt-4 text-right">
+          <p className="text-sm italic">
             <span>{createdAt}</span>
           </p>
         </div>

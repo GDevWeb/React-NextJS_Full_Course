@@ -16,22 +16,23 @@
 
 import { Outlet } from "react-router-dom";
 import PostsList from "../components/PostsList";
-import "./App.css";
 
 function Posts() {
-  // 1.***State***
-
-  // 2.***Functions***
-  // 3.***Render***
   return (
     <>
       <Outlet />
-      <main>
-        <h1 className="text-3xl font-bold text-center">
-          Hello React and NextJs
-        </h1>
-        <h2 className="text-3xl font-bold text-center">React Crash Course</h2>
-        <PostsList />
+      <main className="container mx-auto grid lg:grid-cols-3 gap-4 p-4">
+        <section className="lg:col-span-1 flex flex-col items-center justify-center bg-orange-400 p-8 rounded-lg">
+          <h1 className="text-4xl font-bold text-white text-center">
+            Hello React and NextJs
+          </h1>
+          <h2 className="text-2xl font-semibold text-white text-center mt-4">
+            React Crash Course
+          </h2>
+        </section>
+        <section className="lg:col-span-2 grid grid-cols-1 gap-4">
+          <PostsList />
+        </section>
       </main>
     </>
   );
