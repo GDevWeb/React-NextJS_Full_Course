@@ -1,7 +1,3 @@
-Certainly! Below is a README for your mini-app that includes the dummy backend:
-
----
-
 # Mini React Poster App with Dummy Backend
 
 This is a simple React application with a dummy backend built using Express.js. The backend serves as a RESTful API to manage posts, and the frontend is a React application that interacts with this backend.
