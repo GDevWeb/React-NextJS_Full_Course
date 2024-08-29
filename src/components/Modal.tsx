@@ -23,11 +23,16 @@ function Modal({ children }: ModalProps) {
   const closeHandler = () => {
     navigate(".."); //render form everywhere in the app
   };
+  const stopPropagation = (e) => {
+    e.stopPropagation();
+  };
 
   // 3.***Render***
   return ReactDOM.createPortal(
     <div className={classes.backdrop} onClick={closeHandler}>
-      <div className={classes.modal}>{children}</div>
+      <div className={classes.modal} onClick={stopPropagation}>
+        {children}
+      </div>
     </div>,
     document.getElementById("modal-root")
   );

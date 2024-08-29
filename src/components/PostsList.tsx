@@ -26,7 +26,7 @@ interface Post {
 
 function PostsList() {
   // 0.***Hooks*** :
-  const posts: Post | null = useLoaderData();
+  const posts: Post[] = useLoaderData();
   // 1.***State***
   // 2.***Functions***
 
@@ -41,7 +41,8 @@ function PostsList() {
           {posts.map((post, index) => {
             return (
               <Post
-                key={index}
+                key={post.id}
+                id={post.id}
                 author={post.author}
                 text={post.body}
                 createdAt={post.createdAt}

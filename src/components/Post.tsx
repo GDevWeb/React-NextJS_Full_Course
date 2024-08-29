@@ -6,29 +6,32 @@
 */
 
 interface PostProps {
+  id: string;
   author: string;
   text: string;
   createdAt: string;
 }
 
+import { Link } from "react-router-dom";
 import classes from "./Post.module.css";
-
-function Post({ author, text, createdAt }: PostProps) {
+function Post({ id, author, text, createdAt }: PostProps) {
   return (
-    <div className={classes.post}>
-      <p className={classes.author}>
-        From : <span>{author}</span>
-      </p>
-      <p className={classes.text}>
-        Send : <span>{text}</span>
-      </p>
-
-      <div className="footerPost">
-        <p className={classes.createdAt}>
-          <span>{createdAt}</span>
+    <Link to={id}>
+      <div className={classes.post}>
+        <p className={classes.author}>
+          From : <span>{author}</span>
         </p>
+        <p className={classes.text}>
+          Send : <span>{text}</span>
+        </p>
+
+        <div className="footerPost">
+          <p className={classes.createdAt}>
+            <span>{createdAt}</span>
+          </p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

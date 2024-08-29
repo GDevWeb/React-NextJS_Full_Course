@@ -58,9 +58,8 @@ function NewPost() {
 export default NewPost;
 
 export async function action({ request }) {
-  const formData = request.formData();
-  formData.get("body");
-  const postData = formData.fromEntries(formData); //under the hood : we create a simple object {key : value}
+  const formData = await request.formData();
+  const postData = Object.fromEntries(formData); //under the hood : we create a simple object {key : value}
   // Post :
   await fetch("http://localhost:8080/posts", {
     method: "POST",
