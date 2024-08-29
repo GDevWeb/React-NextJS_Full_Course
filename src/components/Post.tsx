@@ -8,12 +8,12 @@
 interface PostProps {
   author: string;
   text: string;
-  date: string;
+  createdAt: string;
 }
 
 import classes from "./Post.module.css";
 
-function Post({ author, text, date }: PostProps) {
+function Post({ author, text, createdAt }: PostProps) {
   return (
     <div className={classes.post}>
       <p className={classes.author}>
@@ -24,8 +24,8 @@ function Post({ author, text, date }: PostProps) {
       </p>
 
       <div className="footerPost">
-        <p className={classes.date}>
-          <span>{date}</span>
+        <p className={classes.createdAt}>
+          <span>{createdAt}</span>
         </p>
       </div>
     </div>

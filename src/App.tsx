@@ -2,6 +2,11 @@
   30.Adding a Shared Header & more State Management
   32. Handling Form Submission
   Error has occurred with the basic code for the modal "hard coded" , i have to use <modal> from react-dom 
+  39. Understanding & Adding Routing - Install react-router
+  40. Adding Routes - "/", "create-post"
+  41. Working with Layout Routes 
+    1.create layout
+    2.nested routes
 
 */
 
@@ -14,7 +19,6 @@ function App() {
   // 1.***State***
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
-  const [test, setTest] = useState("");
   // 2.***Functions***
   const showModalHandler = () => {
     setModalIsVisible(true);
@@ -23,13 +27,6 @@ function App() {
     setModalIsVisible(false);
   };
 
-  const testOnChangeHandler = (e) => {
-    setTest(e.target.value);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("test:", test);
-  };
   // 3.***Render***
   return (
     <>

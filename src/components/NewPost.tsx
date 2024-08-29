@@ -34,6 +34,14 @@ function NewPost({ onCancel, onAddPost }: NewPostProps) {
     const value = event.target.value;
     setEnteredAuthor(value);
   };
+  const getDate = () => {
+    const currentDate = new Date().toLocaleDateString();
+    const currentHours = new Date().toLocaleTimeString();
+
+    const currentDateMessage = `Send the ${currentDate} at ${currentHours}`;
+
+    return currentDateMessage;
+  };
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,6 +49,7 @@ function NewPost({ onCancel, onAddPost }: NewPostProps) {
     const postData = {
       body: enteredBody,
       author: enteredAuthor,
+      createdAt: getDate(),
     };
     onAddPost(postData);
     console.log(postData);

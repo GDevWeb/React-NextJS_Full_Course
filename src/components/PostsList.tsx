@@ -8,6 +8,7 @@
   35. Adding a Backend to the React SPA
   36. Sending a POST HTTP Request
   37. Handling Side Effects with useEffect()
+  38. Handle Loading State
 
  */
 import { useEffect, useState } from "react";
@@ -24,23 +25,35 @@ interface PostsListProps {
 interface Post {
   body: string;
   author: string;
+  createdAt: string;
 }
 
 function PostsList({ isPosting, onStopPosting }: PostsListProps) {
   // 1.***State***
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [isFetching, setIsFetching] = useState(false);
+  // const [errorFetching, setErrorFetching] = useState(false);
+  // 2.***Functions***
   // Get all :
   useEffect(() => {
     const fetchPosts = async () => {
+      setIsFetching(true);
       const response = await fetch("http://localhost:8080/posts");
       const data = await response.json();
+
+      // if (!response.ok) {
+      //   console.warn(`Error fetching data posts ...`);
+      //   setErrorFetching(true);
+      //   setIsFetching(false);
+      //   setPosts([]);
+      // }
       setPosts(data.posts);
+      setIsFetching(false);
     };
     fetchPosts();
   }, []);
 
-  const [posts, setPosts] = useState<Post[]>([]);
-  // 2.***Functions***
-
+  // Create post :
   const addPostHandler = (postData: Post) => {
     setPosts((existingPosts) => [postData, ...existingPosts]);
     // Post :
@@ -53,24 +66,16 @@ function PostsList({ isPosting, onStopPosting }: PostsListProps) {
     });
   };
 
-  const getDate = () => {
-    const currentDate = new Date().toLocaleDateString();
-    const currentHours = new Date().toLocaleTimeString();
-
-    const currentDateMessage = `Send the ${currentDate} at ${currentHours}`;
-
-    return currentDateMessage;
-  };
   // 3.***Render***
 
   return (
     <>
-      {isPosting && (
+      {!isFetching && isPosting && (
         <Modal onClose={onStopPosting}>
           <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
         </Modal>
       )}
-      {posts.length > 0 ? (
+      {!isFetching && posts.length > 0 ? (
         <ul className={classes.postsList}>
           {posts.map((post, index) => {
             return (
@@ -78,7 +83,7 @@ function PostsList({ isPosting, onStopPosting }: PostsListProps) {
                 key={index}
                 author={post.author}
                 text={post.body}
-                date={getDate()}
+                createdAt={post.createdAt}
               />
             );
           })}
@@ -93,6 +98,16 @@ function PostsList({ isPosting, onStopPosting }: PostsListProps) {
           </h1>
         </div>
       )}
+      {isFetching && (
+        <h1 className="text4xl font-bold text-center text-orange-500 ">
+          Loading posts...
+        </h1>
+      )}
+      {/* {errorFetching && (
+        <h1 className="text4xl font-bold text-center text-red-500 ">
+          Error fetching data posts ...
+        </h1>
+      )} */}
     </>
   );
 }
